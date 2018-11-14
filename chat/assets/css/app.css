@@ -1,0 +1,6 @@
+/* This file is for your main application css. */
+.message {
+    background-color: aqua;
+    border-radius: 20%;
+    font-size: 30px;
+}
