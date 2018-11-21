@@ -1,11 +1,11 @@
 <div class="jumbotron">
   <h2><%= gettext "Привіт в нашому %{name}!", name: "CHAT" %></h2>
 </div>
-<div class="row">
-  <div class="col-lg-6">
-    <div class="message">
+<div class="row" >
+  <div class="col-lg-6" id="history" style="width: 900px; height: 500px; overflow-y: scroll;">
+    <%# <div class="message">
       Hello
-    </div>
+    </div> %>
   </div>
 </div>
 <div class="row marketing">
@@ -15,11 +15,8 @@
     <textarea id="message" cols=50></textarea>
     <br/>
     <hr/>
-    <button>
+    <button id="send">
       Надіслати
-    </button>
-    <button id="enter">
-      Увійти
     </button>
   </div>
 </div>

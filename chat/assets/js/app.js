@@ -18,6 +18,7 @@ document.getElementById("name").oninput = function(ev){
     window.userToken = document.getElementById("name").value;
 }
 
+
 // Import local files
 //
 // Local files can be imported directly using relative
@@ -25,6 +26,39 @@ document.getElementById("name").oninput = function(ev){
 
 import socket from "./socket"
 
-// document.getElementById("enter").onclick = function(){
-//     console.log("Connect");
-// }
+let channel = socket.channel("room:chat", {})
+channel.join()
+  .receive("ok", resp => { console.log("Joined successfully", resp) })
+  .receive("error", resp => { console.log("Unable to join", resp) })
+
+channel.on("new_message", data=>{
+    console.log(data);
+    drovMessage(data);
+    document.getElementById("message").value = "";
+});
+
+channel.on("message_list", data=>{
+    console.log(data);
+    data.messages.forEach(function(element){
+        drovMessage(element);
+    });
+});
+
+document.getElementById("send").onclick = function(e){
+    let text = document.getElementById("message").value;
+    let author = document.getElementById("name").value;
+    if(text!=""){
+        channel.push("new_message", {"text": text, "author": author});
+    }else{
+        alert("Твої думки мені не ясні. Введи текст");
+    }
+}
+
+function drovMessage(data){
+    let div = document.createElement("div");
+    div.setAttribute("class", "message");
+    div.innerText = data.author+": "+data.text;
+    document.getElementById("history").appendChild(div);
+}
+
+

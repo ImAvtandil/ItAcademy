@@ -16,6 +16,11 @@ defmodule Chat.Application do
       # worker(Chat.Worker, [arg1, arg2, arg3]),
     ]
 
+    Agent.start_link(fn -> 
+      :ets.new(:history, [:bag, :public, :named_table])
+    end, name: :ets_saver);
+
+    
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Chat.Supervisor]
